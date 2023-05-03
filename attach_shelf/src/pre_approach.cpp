@@ -18,7 +18,7 @@ public:
     auto degrees_desc = rcl_interfaces::msg::ParameterDescriptor{};
     degrees_desc.description =
         "Number of degrees for the rotation of the robot after stopping.";
-    this->declare_parameter<double>("degrees", -90, degrees_desc);
+    this->declare_parameter<int>("degrees", -90, degrees_desc);
 
     // Get parameters
     this->get_parameter("obstacle", obstacle_);
