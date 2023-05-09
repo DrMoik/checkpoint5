@@ -13,8 +13,13 @@ endif()
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(custom_interfaces REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -32,8 +37,26 @@ endif()
 add_executable(pre_approach src/pre_approach.cpp)
 ament_target_dependencies(pre_approach rclcpp geometry_msgs sensor_msgs)
 
+add_executable(pre_approach_v2 src/pre_approach_v2.cpp)
+ament_target_dependencies(pre_approach_v2 rclcpp sensor_msgs geometry_msgs tf2_ros custom_interfaces)
+
+add_executable(approach_service_server src/approach_service_server.cpp)
+ament_target_dependencies(approach_service_server
+  rclcpp
+  sensor_msgs
+  geometry_msgs
+  std_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  custom_interfaces
+)
+
+
 # Install the pre_approach node
 install(TARGETS pre_approach
+pre_approach_v2
+approach_service_server
   DESTINATION lib/${PROJECT_NAME}
 )
 
